@@ -1,0 +1,14 @@
+Public Url to GitHub repository (not private) [URL01]
+  https://github.com/Muhamedshe7ata/Udapeple-cicd
+
+Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
+
+  http://udapeople-5c41949.s3-website-us-east-1.amazonaws.com
+
+
+Public URL to your Prometheus Server 
+  http://ec2-3-83-228-168.compute-1.amazonaws.com:9090/
+
+Pipline link for big view:
+https://lucid.app/documents/view/478e90ae-e5ef-4dff-9a58-7a65264e3f22
+
