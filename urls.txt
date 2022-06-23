@@ -1,9 +1,14 @@
-Public Url to GitHub repository (not private) [URL01]
+Public Url to GitHub repository (not private) 
   https://github.com/Muhamedshe7ata/Udapeple-cicd
 
-Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
+Public URL for your S3 Bucket (aka, your green candidate front-end) 
 
-  http://udapeople-5c41949.s3-website-us-east-1.amazonaws.com
+ http://udapeople-3f0b71b.s3-website-us-east-1.amazonaws.com/#/employees/new
+
+Public URL for your Cloudfront 
+
+https://d2yr25sx6edq2r.cloudfront.net/#/employees
+
 
 
 Public URL to your Prometheus Server 
