@@ -19,6 +19,12 @@ commands:
             sudo apt install software-properties-common -y
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible -y
+  notify_on_failure:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: udapeopleci
+          template: basic_fail_1
   install_nodejs:
     description: Install Node.js 13
     steps:
@@ -67,7 +73,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -85,7 +91,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -103,7 +109,7 @@ jobs:
 
   test-frontend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -120,7 +126,7 @@ jobs:
 
   test-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -136,7 +142,7 @@ jobs:
       #     key: backend-deps
   scan-frontend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -150,7 +156,7 @@ jobs:
             npm audit --audit-level=critical
   scan-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -345,12 +351,12 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicDnsName' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-          # if curl -s "${API_URL}/api/status" | grep "ok"
-          # then
-          #   exit 0
-          # else
-          #   exit 1
-          # fi
+          if curl -s ${API_URL}/api/status | grep "ok"
+          then
+            exit 0
+          else
+            exit 1
+          fi
       - run:
           name: Frontend smoke test.
           command: |
