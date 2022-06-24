@@ -382,22 +382,21 @@ jobs:
       - install_awscli
       - install_nodejs
       - run:
-          name: Store old workflow ID to kvdb
+          name: save old workflow ID to kvdb.io
           command: |
-            export OldWorkflowID=$(aws cloudformation \
-              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-              --no-paginate --output text)
-            echo "OldWorkflowID: ${OldWorkflowID}"
-            curl https://kvdb.io/YLTX6K5V1r7UY1NrHHKrHo/old_workflowid -d "${OldWorkflowID}"
-      
+            export OLD_WORKFLOW_ID=$(aws cloudformation \
+                list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                --no-paginate --output text)
+            echo "Old workflow ID: ${OLD_WORKFLOW_ID}"
+            curl http://kvdb.io/${KVDB_BUCKET}/old_workflow_id -d "${OLD_WORKFLOW_ID}"
       - run:
           name: Update cloudfront distribution
           command: |
             aws cloudformation deploy \
-            --template-file .circleci/files/cloudfront.yml \
-            --stack-name InitialStack \
-            --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
-            --tags project=udapeople
+                      --template-file .circleci/files/cloudfront.yml \
+                      --stack-name InitialStack \
+                      --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                      --tags project=udapeople
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - revert-migrations:
