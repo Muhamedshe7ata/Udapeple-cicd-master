@@ -36,13 +36,7 @@
       curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
       sudo apt -y install nodejs
 
-  - name: "installing npm"
-    become: true
-    apt:
-      name: npm
-      update_cache: yes
-      state: latest
-  
+
   - name: "install pm2"
     become: true
     npm:
