@@ -13,6 +13,7 @@
   
   pre_tasks:
     - name: "wait 600 seconds for target connection to become reachable/usable."
+      become: true
       wait_for_connection:
         timeout: 600
 
